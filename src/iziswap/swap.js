@@ -8,7 +8,7 @@ const { getSwapChainWithExactInputCall } = require('iziswap-sdk/lib/swap/funcs')
 const { getMulticallContracts } = require('iziswap-sdk/lib/base');
 const { getChainInfo } = require('./config');
 const { BigNumber } = require('bignumber.js');
-// const ethers = require('ethers');
+const ethers = require('ethers');
 const Web3 = require('web3');
 
 const swap = async (fromTokenAddress, toTokenAddress, amount, chainId, accountAddress) => {
