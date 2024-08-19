@@ -5,7 +5,7 @@
 ### Configuration
 
 1. **Add Chain Configuration**
-   - Update the `/iziswap/config.js` file with the configuration details for the blockchain you want to use. Make sure to set gasTokenAddress to the address of the wrapped gas token.
+   - Update the `src/iziswap/config.js` file with the configuration details for the blockchain you want to use. Make sure to set gasTokenAddress to the address of the wrapped gas token.
 
 ### Starting the Server
 
