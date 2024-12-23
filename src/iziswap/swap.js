@@ -23,14 +23,14 @@ const swap = async (fromTokenAddress, toTokenAddress, amount, chainId, accountAd
     let fromToken
     let toToken
 
-    if (fromTokenAddress.toLowerCase() == chainInfo.gasTokenSymbol.toLowerCase()) {
+    if (fromTokenAddress.toLowerCase() == chainInfo.gasTokenAddress.toLowerCase()) {
         fromToken = await fetchToken(chainInfo.gasTokenAddress, chain, web3)
         fromToken.symbol = chainInfo.gasTokenSymbol
     } else {
         fromToken = await fetchToken(fromTokenAddress, chain, web3)
     }
     
-    if (toTokenAddress.toLowerCase() == chainInfo.gasTokenSymbol.toLowerCase()) {
+    if (toTokenAddress.toLowerCase() == chainInfo.gasTokenAddress.toLowerCase()) {
         toToken = await fetchToken(chainInfo.gasTokenAddress, chain, web3)
         toToken.symbol = chainInfo.gasTokenSymbol
     } else {
@@ -71,15 +71,15 @@ const swap = async (fromTokenAddress, toTokenAddress, amount, chainId, accountAd
         value: ethers.BigNumber.from(String(options.value)),
     }
 
-    // const serializedTransaction = ethers.utils.serializeTransaction(txParams)
-    return {pathQueryResult, txParams}
+    const serializedTransaction = ethers.utils.serializeTransaction(txParams)
+
+    return {pathQueryResult, txParams, serializedTransaction}
 }
 
 const searchSwapPath = async (fromToken, toToken, amountInput, chainId) => {
     const chainInfo = getChainInfo(chainId)
     const web3 = new Web3(new Web3.providers.HttpProvider(chainInfo.rpc))
     const multicallContract = getMulticallContracts(chainInfo.multicallAddress, web3)
-    const tokenList = await getTokenWhitelist(chainId)
 
     const searchParams = {
         chainId: Number(chainId),
@@ -90,8 +90,8 @@ const searchSwapPath = async (fromToken, toToken, amountInput, chainId) => {
         liquidityManagerAddress: chainInfo.liquidityManagerAddress,
         quoterAddress: chainInfo.quoterAddress,
         poolBlackList: [],
-        midTokenList: tokenList,
-        supportFeeContractNumbers: [3000, 500, 100],
+        midTokenList: chainInfo.midTokenList,
+        supportFeeContractNumbers: chainInfo.supportFeeContractNumbers,
         support001Pools: [],
         direction: SwapDirection.ExactIn,
         amount: amountInput
