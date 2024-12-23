@@ -23,14 +23,14 @@ const swap = async (fromTokenAddress, toTokenAddress, amount, chainId, accountAd
     let fromToken
     let toToken
 
-    if (fromTokenAddress.toLowerCase() == chainInfo.gasTokenAddress.toLowerCase()) {
+    if (fromTokenAddress.toLowerCase() == chainInfo.gasTokenSymbol.toLowerCase()) {
         fromToken = await fetchToken(chainInfo.gasTokenAddress, chain, web3)
         fromToken.symbol = chainInfo.gasTokenSymbol
     } else {
         fromToken = await fetchToken(fromTokenAddress, chain, web3)
     }
     
-    if (toTokenAddress.toLowerCase() == chainInfo.gasTokenAddress.toLowerCase()) {
+    if (toTokenAddress.toLowerCase() == chainInfo.gasTokenSymbol.toLowerCase()) {
         toToken = await fetchToken(chainInfo.gasTokenAddress, chain, web3)
         toToken.symbol = chainInfo.gasTokenSymbol
     } else {
