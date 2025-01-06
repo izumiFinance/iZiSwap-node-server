@@ -11,7 +11,7 @@ const { BigNumber } = require('bignumber.js');
 const ethers = require('ethers');
 const Web3 = require('web3');
 
-const swap = async (fromTokenAddress, toTokenAddress, amount, chainId, accountAddress) => {
+const swap = async (fromTokenAddress, toTokenAddress, amount, chainId, accountAddress, slippery) => {
     const chainInfo = getChainInfo(chainId)
     if(!chainInfo) {
         throw Error("chain not be supported")
@@ -50,7 +50,7 @@ const swap = async (fromTokenAddress, toTokenAddress, amount, chainId, accountAd
         tokenChain: pathQueryResult.path.tokenChain,
         feeChain: pathQueryResult.path.feeContractNumber,
         inputAmount: amountInput,
-        minOutputAmount: pathQueryResult.amount
+        minOutputAmount: new BigNumber(pathQueryResult.amount).times(1 - slippery / 100).toFixed(0)
     }
 
     const {swapCalling, options} = getSwapChainWithExactInputCall(

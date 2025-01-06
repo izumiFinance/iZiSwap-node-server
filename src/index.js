@@ -18,13 +18,14 @@ app.get('/api/swap', async (req, res) => {
     const tokenFrom = req.query.tokenFrom;
     const tokenTo = req.query.tokenTo;
     const account = req.query.account;
+    const slippery = req.query.slippery ?? 0;
 
     if ( !chainId || !amount || !tokenFrom || !tokenTo || !account) {
         return res.json({message: "Lacking parameters"});
     }
 
     try {
-        const txData = await swap(tokenFrom, tokenTo, amount, Number(chainId), account)
+        const txData = await swap(tokenFrom, tokenTo, amount, Number(chainId), account, Number(slippery))
         res.json(txData);
     } catch(e) {
         res.json({ message: e.message});

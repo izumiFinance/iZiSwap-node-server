@@ -39,3 +39,4 @@ your-domain.com/api/swap?chainId={chainId}&amount={amount}&tokenFrom={tokenFromA
   - `tokenFromAddress`: The contract address of the token you are swapping from, or token symbol if using a gas token.
   - `tokenToAddress`: The contract address of the token you are swapping to, or token symbol if using a gas token.
   - `account`: The account address initiating the swap.
+  - `slippery`: The allowed slippage tolerance. Set to 1.5 to represent a 1.5% slippage tolerance. Default value is 0.
